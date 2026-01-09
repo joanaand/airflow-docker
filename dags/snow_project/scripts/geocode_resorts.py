@@ -40,28 +40,28 @@ def geocode_location(town, country):
     return None, None
 
 
-    def main():
-        df = pd.read_csv(INPUT_FILE)
+def main():
+    df = pd.read_csv(INPUT_FILE)
 
-        latitudes = []
-        longitudes = []
+    latitudes = []
+    longitudes = []
 
-        for i, row in df.iterrows():
-            print(f"Geocoding {i+1}/{len(df)}: {row['town']}, {row['country']}")
+    for i, row in df.iterrows():
+        print(f"Geocoding {i+1}/{len(df)}: {row['town']}, {row['country']}")
 
-            lat, lon = geocode_location(row["town"], row["country"])
-            latitudes.append(lat)
-            longitudes.append(lon)
+        lat, lon = geocode_location(row["town"], row["country"])
+        latitudes.append(lat)
+        longitudes.append(lon)
 
-            time.sleep(REQUEST_DELAY)
+        time.sleep(REQUEST_DELAY)
 
-        df["latitude"] = latitudes
-        df["longitude"] = longitudes
-            
-        df.to_csv(OUTPUT_FILE, index=False)
+    df["latitude"] = latitudes
+    df["longitude"] = longitudes
+        
+    df.to_csv(OUTPUT_FILE, index=False)
 
-        print(f"\nSaved geocoded data to {OUTPUT_FILE}")
-        print(df.head())
+    print(f"\nSaved geocoded data to {OUTPUT_FILE}")
+    print(df.head())
 
 if __name__ == "__main__":
     main()
