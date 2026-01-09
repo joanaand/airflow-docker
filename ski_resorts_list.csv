@@ -1,0 +1,61 @@
+resort_name,country,url,elevation_m,total_km,blue_km,red_km,black_km,lift_price
+1. Les 3 Vallées – Val Thorens/​Les Menuires/​Méribel/​Courchevel,France,https://www.skiresort.info/ski-resort/les-3-vallees-val-thorens-les-menuires-meribel-courchevel/,2130.0,600.0,336.0,204.0,60.0,€ 81.80
+2. Les Portes du Soleil – Morzine/​Avoriaz/​Les Gets/​Châtel/​Morgins/​Champéry,Switzerland,https://www.skiresort.info/ski-resort/les-portes-du-soleil-morzine-avoriaz-les-gets-chatel-morgins-champery/,1269.0,580.0,310.0,210.0,60.0,"€ 72,-"
+3. 4 Vallées – Verbier/​La Tzoumaz/​Nendaz/​Veysonnaz/​Thyon,Switzerland,https://www.skiresort.info/ski-resort/4-vallees-verbier-la-tzoumaz-nendaz-veysonnaz-thyon/,1980.0,412.0,107.0,202.0,103.0,"SFr. 94,- / approx. € 101,-"
+4. Via Lattea – Sestriere/​Sauze d’Oulx/​San Sicario/​Claviere/​Montgenèvre,Italy,https://www.skiresort.info/ski-resort/via-lattea-sestriere-sauze-doulx-san-sicario-claviere-montgenevre/,1251.0,400.0,96.0,220.0,84.0,"€ 66,-"
+5. Zermatt/​Breuil-Cervinia/​Valtournenche – Matterhorn,Switzerland,https://www.skiresort.info/ski-resort/zermatt-breuil-cervinia-valtournenche-matterhorn/,2337.0,322.0,75.0,220.0,27.0,"SFr. 116,- / approx. € 125,-"
+6. Les Sybelles – Le Corbier/​La Toussuire/​Les Bottières/​St Colomban des Villards/​St Sorlin/​St Jean d’Arves,France,https://www.skiresort.info/ski-resort/les-sybelles-le-corbier-la-toussuire-les-bottieres-st-colomban-des-villards-st-sorlin-st-jean-darves/,1520.0,310.0,71.3,217.0,21.7,€ 59.30
+7. Tignes/​Val d'Isère,France,https://www.skiresort.info/ski-resort/tignes-val-disere/,1906.0,300.0,165.0,75.0,60.0,"€ 75,-"
+8. St. Anton/​St. Christoph/​Stuben/​Lech/​Zürs/​Warth/​Schröcken – Ski Arlberg,Austria,https://www.skiresort.info/ski-resort/st-anton-st-christoph-stuben-lech-zuers-warth-schroecken-ski-arlberg/,1507.0,299.7,130.0,120.0,49.7,€ 81.50
+9. SkiWelt Wilder Kaiser-Brixental,Austria,https://www.skiresort.info/ski-resort/skiwelt-wilder-kaiser-brixental/,1249.0,275.0,115.0,121.0,39.0,"€ 76,-"
+10. Saalbach Hinterglemm Leogang Fieberbrunn (Skicircus),Austria,https://www.skiresort.info/ski-resort/saalbach-hinterglemm-leogang-fieberbrunn-skicircus/,1266.0,270.0,140.0,112.0,18.0,"€ 79,-"
+11. Le Grand Massif – Flaine/​Les Carroz/​Morillon/​Samoëns/​Sixt,France,https://www.skiresort.info/ski-resort/le-grand-massif-flaine-les-carroz-morillon-samoens-sixt/,1783.0,265.0,135.0,95.0,35.0,"€ 61,-"
+12. Big Sky Resort,USA,https://www.skiresort.info/ski-resort/big-sky-resort/,1330.0,250.0,53.0,150.0,47.0,"US$ 285,- / approx. € 243,-"
+12. Park City,USA,https://www.skiresort.info/ski-resort/park-city/,975.0,250.0,20.0,105.0,125.0,"US$ 351,- / approx. € 299,-"
+12. Serre Chevalier – Briançon/​Chantemerle/​Villeneuve-la-Salle/​Le Monêtier-les-Bains,France,https://www.skiresort.info/ski-resort/serre-chevalier-briancon-chantemerle-villeneuve-la-salle-le-monetier-les-bains/,1600.0,250.0,137.5,80.0,32.5,€ 65.50
+12. Alpe d'Huez,France,https://www.skiresort.info/ski-resort/alpe-dhuez/,2205.0,250.0,70.0,130.0,50.0,"€ 66,-"
+16. Ischgl/​Samnaun – Silvretta Arena,Austria,https://www.skiresort.info/ski-resort/ischgl-samnaun-silvretta-arena/,1512.0,239.0,47.0,140.0,52.0,"€ 79,-"
+17. Snowmass,USA,https://www.skiresort.info/ski-resort/snowmass/,1340.0,237.0,12.0,114.0,111.0,"US$ 279,- / approx. € 237,-"
+18. Vail,USA,https://www.skiresort.info/ski-resort/vail/,1070.0,234.0,57.0,84.0,93.0,"US$ 356,- / approx. € 303,-"
+19. Arosa Lenzerheide,Switzerland,https://www.skiresort.info/ski-resort/arosa-lenzerheide/,1636.0,225.0,110.0,87.0,28.0,"SFr. 89,- / approx. € 96,-"
+19. La Plagne (Paradiski),France,https://www.skiresort.info/ski-resort/la-plagne-paradiski/,1960.0,225.0,139.0,59.0,27.0,"€ 70,-"
+21. Grandvalira – Pas de la Casa/​Grau Roig/​Soldeu/​El Tarter/​Canillo/​Encamp,Andorra,https://www.skiresort.info/ski-resort/grandvalira-pas-de-la-casa-grau-roig-soldeu-el-tarter-canillo-encamp/,930.0,215.0,100.0,82.0,33.0,"€ 69,-"
+22. Deer Valley,USA,https://www.skiresort.info/ski-resort/deer-valley/,933.0,202.0,72.0,90.0,40.0,"US$ 349,- / approx. € 297,-"
+23. Whistler Blackcomb,Canada,https://www.skiresort.info/ski-resort/whistler-blackcomb/,1609.0,200.0,40.0,110.0,50.0,"C$ 351,- / approx. € 218,-"
+23. Palisades Tahoe,USA,https://www.skiresort.info/ski-resort/palisades-tahoe/,855.0,200.0,50.0,85.0,65.0,"US$ 290,- / approx. € 247,-"
+23. Les 2 Alpes,France,https://www.skiresort.info/ski-resort/les-2-alpes/,2243.0,200.0,110.0,56.0,34.0,"€ 66,-"
+23. Les Arcs/​Peisey-Vallandry (Paradiski),France,https://www.skiresort.info/ski-resort/les-arcs-peisey-vallandry-paradiski/,2026.0,200.0,104.0,70.0,26.0,"€ 70,-"
+27. Espace Diamant – Les Saisies/​Notre-Dame-de-Bellecombe/​Praz sur Arly/​Flumet/​Crest-Voland,France,https://www.skiresort.info/ski-resort/espace-diamant-les-saisies-notre-dame-de-bellecombe-praz-sur-arly-flumet-crest-voland/,1069.0,192.0,132.0,49.0,11.0,"€ 50,-"
+28. KitzSki – Kitzbühel/​Kirchberg,Austria,https://www.skiresort.info/ski-resort/kitzski-kitzbuehel-kirchberg/,1200.0,188.0,102.0,66.0,20.0,€ 79.50
+29. Serfaus-Fiss-Ladis,Austria,https://www.skiresort.info/ski-resort/serfaus-fiss-ladis/,1628.0,186.0,47.0,112.0,27.0,"€ 78,-"
+30. Megève/​Saint-Gervais,France,https://www.skiresort.info/ski-resort/megeve-saint-gervais/,1503.0,185.0,70.0,90.0,25.0,€ 63.50
+30. Vars/​Risoul – La Forêt Blanche,France,https://www.skiresort.info/ski-resort/vars-risoul-la-foret-blanche/,1100.0,185.0,75.0,90.0,20.0,"€ 58,-"
+32. Val Gardena (Gröden),Italy,https://www.skiresort.info/ski-resort/val-gardena-groeden/,1282.0,181.0,52.0,108.0,21.0,"€ 80,-"
+33. Espace Lumière – Pra Loup/​Val d’Allos,France,https://www.skiresort.info/ski-resort/espace-lumiere-pra-loup-val-dallos/,968.0,180.0,56.0,93.5,30.5,€ 48.50
+34. Laax/​Flims/​Falera,Switzerland,https://www.skiresort.info/ski-resort/laax-flims-falera/,1918.0,176.0,85.0,76.0,15.0,
+35. Baqueira/​Beret,Spain,https://www.skiresort.info/ski-resort/baqueira-beret/,1110.0,166.0,77.0,68.0,21.0,"€ 75,-"
+36. Steamboat,USA,https://www.skiresort.info/ski-resort/steamboat/,1118.0,165.0,25.0,95.0,45.0,"US$ 299,- / approx. € 254,-"
+36. Le Grand Domaine – Valmorel/​Doucy/​Celliers/​St François Longchamp,France,https://www.skiresort.info/ski-resort/le-grand-domaine-valmorel-doucy-celliers-st-francois-longchamp/,1153.0,165.0,115.0,35.0,15.0,€ 58.50
+38. Galibier Thabor – Valmeinier/​Valloire,France,https://www.skiresort.info/ski-resort/galibier-thabor-valmeinier-valloire/,1320.0,160.0,60.0,85.0,15.0,€ 53.60
+39. Madonna di Campiglio/​Pinzolo/​Folgàrida/​Marilleva,Italy,https://www.skiresort.info/ski-resort/madonna-di-campiglio-pinzolo-folgarida-marilleva/,1652.0,155.0,50.0,72.0,33.0,"€ 85,-"
+39. St. Moritz – Corviglia,Switzerland,https://www.skiresort.info/ski-resort/st-moritz-corviglia/,1285.0,155.0,42.0,79.0,34.0,
+41. Breckenridge,USA,https://www.skiresort.info/ski-resort/breckenridge/,988.0,153.0,28.0,60.0,65.0,"US$ 321,- / approx. € 273,-"
+42. Zillertal Arena – Zell am Ziller/​Gerlos/​Königsleiten/​Hochkrimml,Austria,https://www.skiresort.info/ski-resort/zillertal-arena-zell-am-ziller-gerlos-koenigsleiten-hochkrimml/,1920.0,150.1,50.0,88.1,12.0,"€ 79,-"
+43. Beaver Creek,USA,https://www.skiresort.info/ski-resort/beaver-creek/,1233.0,150.0,28.5,64.5,57.0,"US$ 356,- / approx. € 303,-"
+44. La Molina/​Masella – Alp2500,Spain,https://www.skiresort.info/ski-resort/la-molina-masella-alp2500/,921.0,145.0,80.0,47.0,18.0,"€ 58,-"
+45. Sölden,Austria,https://www.skiresort.info/ski-resort/soelden/,1990.0,143.4,76.4,37.8,29.2,"€ 83,-"
+46. Espace San Bernardo – La Rosière/​La Thuile,France,https://www.skiresort.info/ski-resort/espace-san-bernardo-la-rosiere-la-thuile/,1610.0,143.1,56.0,70.5,16.6,"€ 58,-"
+47. Winter Park Resort,USA,https://www.skiresort.info/ski-resort/winter-park-resort/,933.0,143.0,11.0,53.0,79.0,"US$ 283,- / approx. € 241,-"
+47. Formigal,Spain,https://www.skiresort.info/ski-resort/formigal/,764.0,143.0,48.0,75.0,20.0,"€ 61,-"
+49. Mayrhofen – Penken/​Ahorn/​Rastkogel/​Eggalm (Mountopolis),Austria,https://www.skiresort.info/ski-resort/mayrhofen-penken-ahorn-rastkogel-eggalm-mountopolis/,1870.0,142.0,44.0,66.0,32.0,"€ 79,-"
+49. Fernie,Canada,https://www.skiresort.info/ski-resort/fernie/,1082.0,142.0,42.0,58.0,42.0,"C$ 189,- / approx. € 117,-"
+51. Silvretta Montafon,Austria,https://www.skiresort.info/ski-resort/silvretta-montafon/,1730.0,141.6,60.0,50.0,31.6,"€ 77,-"
+52. Crans-Montana,Switzerland,https://www.skiresort.info/ski-resort/crans-montana/,1417.0,140.0,55.0,70.0,15.0,"SFr. 89,- / approx. € 96,-"
+53. Lake Louise,Canada,https://www.skiresort.info/ski-resort/lake-louise/,991.0,139.0,35.0,62.0,42.0,"C$ 175,- / approx. € 109,-"
+54. Sun Peaks,Canada,https://www.skiresort.info/ski-resort/sun-peaks/,884.0,135.0,13.5,78.0,43.5,"C$ 199,- / approx. € 123,-"
+54. Keystone,USA,https://www.skiresort.info/ski-resort/keystone/,908.0,135.0,25.0,65.0,45.0,"US$ 292,- / approx. € 248,-"
+54. Aspen Highlands,USA,https://www.skiresort.info/ski-resort/aspen-highlands/,1108.0,135.0,24.3,40.5,70.2,"US$ 279,- / approx. € 237,-"
+54. Auron (Saint-Etienne-de-Tinée),France,https://www.skiresort.info/ski-resort/auron-saint-etienne-de-tinee/,850.0,135.0,58.0,45.0,32.0,"€ 44,-"
+58. Alagna Valsesia/​Gressoney-La-Trinité/​Champoluc/​Frachey (Monterosa Ski),Italy,https://www.skiresort.info/ski-resort/alagna-valsesia-gressoney-la-trinite-champoluc-frachey-monterosa-ski/,2063.0,132.0,29.0,89.0,14.0,"€ 69,-"
+59. Alta Badia,Italy,https://www.skiresort.info/ski-resort/alta-badia/,1454.0,130.0,74.0,47.0,9.0,"€ 80,-"
+60. Copper Mountain,USA,https://www.skiresort.info/ski-resort/copper-mountain/,832.0,126.0,30.0,40.0,56.0,"US$ 269,- / approx. € 228,-"
