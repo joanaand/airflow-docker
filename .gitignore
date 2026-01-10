@@ -13,6 +13,10 @@ airflow.db
 # Environment variables
 .env
 
+# Data files (generated)
+data/
+*.csv
+
 # OS / Editor
 .vscode/
 .DS_Store
