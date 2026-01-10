@@ -2,57 +2,51 @@ import requests
 import pandas as pd
 import time
 import os
+from pathlib import Path
 
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
 if not API_KEY:
     raise ValueError("OPENWEATHER_API_KEY not found in environment variables")
 
-INPUT_FILE = "data/ski_resorts_list.csv"
-OUTPUT_FILE = "data/ski_resorts_geocoded.csv"
+BASE_DIR = Path(__file__).resolve().parents[1]
+DATA_DIR = BASE_DIR / "data"
+
+INPUT_FILE = DATA_DIR / "ski_resorts_clean.csv"
+OUTPUT_FILE = DATA_DIR / "ski_resorts_geocoded.csv"
+FAILED_FILE = DATA_DIR / "geocode_failures.csv"
 
 GEOCODE_URL = "http://api.openweathermap.org/geo/1.0/direct"
-REQUEST_DELAY = 1  # seconds
+REQUEST_DELAY = 1
 
 
-def geocode_location(resort_name, town, country):
+def geocode_location(town, country_code):
     """
-    Attempts to geocode a ski resort using multiple query strategies.
-    Returns (latitude, longitude) or (None, None) if not found.
+    Geocode using clean town + ISO country code.
+    Example: Morillon,FR
     """
 
-    # Require at least some meaningful location information
-    if not (resort_name or town):
+    if not town or not country_code:
         return None, None
 
-    queries = [
-        f"{town}, {country}" if town and country else None,
-        f"{resort_name}, {country}" if resort_name and country else None,
-        town,
-        resort_name
-    ]
+    query = f"{town},{country_code}"
 
-    # Remove empty queries
-    queries = [q for q in queries if q]
+    params = {
+        "q": query,
+        "limit": 1,
+        "appid": API_KEY
+    }
 
-    for query in queries:
-        params = {
-            "q": query,
-            "limit": 5,
-            "appid": API_KEY
-        }
+    try:
+        response = requests.get(GEOCODE_URL, params=params, timeout=10)
+        response.raise_for_status()
+        data = response.json()
 
-        try:
-            response = requests.get(GEOCODE_URL, params=params, timeout=10)
-            response.raise_for_status()
-            data = response.json()
+        if data:
+            return data[0]["lat"], data[0]["lon"]
 
-            if data:
-                return data[0]["lat"], data[0]["lon"]
+    except requests.RequestException as e:
+        print(f"Geocoding failed for '{query}': {e}")
 
-        except requests.RequestException as e:
-            print(f"Geocoding request failed for '{query}': {e}")
-
-    print(f"Could not geocode: {resort_name} ({town}, {country})")
     return None, None
 
 
@@ -61,15 +55,22 @@ def main():
 
     latitudes = []
     longitudes = []
+    failed = []
 
     for i, row in df.iterrows():
         print(f"Geocoding {i + 1}/{len(df)}: {row['resort_name']}")
 
         lat, lon = geocode_location(
-            resort_name=row["resort_name"],
             town=row["town"],
-            country=row["country"]
+            country_code=row["country_code"]
         )
+
+        if lat is None:
+            failed.append({
+                "resort_name": row["resort_name"],
+                "town": row["town"],
+                "country_code": row["country_code"]
+            })
 
         latitudes.append(lat)
         longitudes.append(lon)
@@ -78,11 +79,13 @@ def main():
 
     df["latitude"] = latitudes
     df["longitude"] = longitudes
-
     df.to_csv(OUTPUT_FILE, index=False)
 
+    if failed:
+        pd.DataFrame(failed).to_csv(FAILED_FILE, index=False)
+        print(f"Some resorts could not be geocoded. See {FAILED_FILE}")
+
     print(f"Saved geocoded data to {OUTPUT_FILE}")
-    print(df.head())
 
 
 if __name__ == "__main__":

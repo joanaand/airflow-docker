@@ -126,6 +126,8 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+    environment:
+      - OPENWEATHER_API_KEY=17cc6755a655fd4ace67786105e4def8
 
   airflow-scheduler:
     <<: *airflow-common
