@@ -2,6 +2,7 @@
 import pandas as pd
 import pycountry
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = BASE_DIR / "data"
@@ -59,6 +60,7 @@ def main():
     df["difficulty_score"] = ((df["blue_km"] * 1 + df["red_km"] * 2 + df["black_km"] * 3) / df["total_km"]).round(3)
 
     #save cleaned data
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     df.to_csv(output_path, index=False)
 
 if __name__ == "__main__":

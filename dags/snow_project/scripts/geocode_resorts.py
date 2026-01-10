@@ -79,6 +79,7 @@ def main():
 
     df["latitude"] = latitudes
     df["longitude"] = longitudes
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     df.to_csv(OUTPUT_FILE, index=False)
 
     if failed:

@@ -7,6 +7,8 @@ import pandas as pd
 import time
 import re
 from pathlib import Path
+import os
+
 
 BASE_URL = "https://www.skiresort.info"
 LIST_URL = f"{BASE_URL}/ski-resorts/sorted/slope-length/"

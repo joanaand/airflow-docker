@@ -78,6 +78,7 @@ def main():
     df["snow_mm"] = snows
     df["weather_desc"] = conditions
 
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     df.to_csv(OUTPUT_FILE, index=False)
 
     if failed:
