@@ -7,14 +7,14 @@ import pandas as pd
 import time
 import re
 from pathlib import Path
-from airflow.models import Variable
+#rom airflow.models import Variable
 
 
 #Get base URL from Airflow Variable (with fallback)
 BASE_LIST_URL = Variable.get(
     "SKI_RESORT_LIST_URL",
     default_var="https://www.skiresort.info/ski-resorts/"
-)
+) 
 
 PAGE_URL = BASE_LIST_URL.rstrip("/") + "/page/{page}/"
 

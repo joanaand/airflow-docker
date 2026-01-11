@@ -14,10 +14,6 @@ FAILED_FILE = DATA_DIR / "weather_failures.csv"
 REQUEST_DELAY = 1
 
 def fetch_open_meteo(lat, lon):
-    """
-    Fetch last 30 days of snow and temperature from Open-Meteo.
-    """
-    # Define date range
     end_date = datetime.utcnow().date()
     start_date = end_date - timedelta(days=30)
 
@@ -27,7 +23,12 @@ def fetch_open_meteo(lat, lon):
         "longitude": lon,
         "start_date": start_date.isoformat(),
         "end_date": end_date.isoformat(),
-        "daily": "snowfall_sum,snow_depth_mean,temperature_2m_max",
+        "daily": (
+            "snowfall_sum,snow_depth_mean,"
+            "temperature_2m_mean,"
+            "sunshine_duration,"
+            "rain_sum"
+        ),
         "timezone": "UTC"
     }
 
@@ -36,24 +37,25 @@ def fetch_open_meteo(lat, lon):
         res.raise_for_status()
         data = res.json().get("daily", {})
 
-        # If no usable data, return None
         if not data:
             return None
 
-        # Build results
+        snowfall = data.get("snowfall_sum", [])
+        snow_depth = data.get("snow_depth_mean", [])
+        temps = data.get("temperature_2m_mean", [])
+        sunshine = data.get("sunshine_duration", [])
+        rain = data.get("rain_sum", [])
+
         return {
-            "total_snowfall_mm": sum(data.get("snowfall_sum", [])),
-            "avg_snow_depth_mm": (
-                sum(data.get("snow_depth_mean", [])) / len(data.get("snow_depth_mean", []))
-                if data.get("snow_depth_mean")
-                else None
-            ),
-            "avg_max_temp_30d_c": (
-                sum(data.get("temperature_2m_max", [])) / len(data.get("temperature_2m_max", []))
-                if data.get("temperature_2m_max")
-                else None
+            "total_snowfall_mm": sum(snowfall) if snowfall else None,
+            "avg_snow_depth_mm": sum(snow_depth) / len(snow_depth) if snow_depth else None,
+            "avg_temp_30d_c": sum(temps) / len(temps) if temps else None,
+            "total_rain_30d_mm": sum(rain) if rain else None,
+            "avg_sunshine_hours_30d": (
+                sum(sunshine) / len(sunshine) / 3600 if sunshine else None
             )
         }
+
     except Exception as e:
         print(f"Open-Meteo fetch failed for {lat},{lon}: {e}")
         return None
