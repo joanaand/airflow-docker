@@ -7,8 +7,8 @@ import os
 BASE_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = BASE_DIR / "data"
 
-file_path = DATA_DIR / "ski_resorts_list.csv"
-output_path = DATA_DIR / "ski_resorts_clean.csv"
+INPUT_FILE = DATA_DIR / "ski_resorts_list.csv"
+OUTPUT_FILE = DATA_DIR / "ski_resorts_clean.csv"
 
 
 def get_country_code(country_name):
@@ -22,7 +22,7 @@ def get_country_code(country_name):
     
 def main():
     #read file
-    df = pd.read_csv(file_path)
+    df = pd.read_csv(INPUT_FILE)
 
     #fix resort names and create sub_resorts column
     cleaned_name = (
@@ -61,7 +61,7 @@ def main():
 
     #save cleaned data
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-    df.to_csv(output_path, index=False)
+    df.to_csv(OUTPUT_FILE, index=False)
 
 if __name__ == "__main__":
     main()
