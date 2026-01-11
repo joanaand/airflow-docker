@@ -103,10 +103,13 @@ def scrape_resort_list():
                 elevation = extract_number(elevation_text)
 
             #Slope info
-            total_elem = card.select_one(".slopeinfoitem.active")
-            blue_elem = card.select_one(".slopeinfoitem.blue")
-            red_elem = card.select_one(".slopeinfoitem.red")
-            black_elem = card.select_one(".slopeinfoitem.black")
+            slope_items = card.select("span.slopeinfoitem")
+
+            total_elem = slope_items[0] if len(slope_items) > 0 else None
+            blue_elem  = card.select_one("span.slopeinfoitem.blue")
+            red_elem   = card.select_one("span.slopeinfoitem.red")
+            black_elem = card.select_one("span.slopeinfoitem.black")
+
 
             total_km = extract_number(total_elem.get_text()) if total_elem else None
             blue_km = extract_number(blue_elem.get_text()) if blue_elem else None
