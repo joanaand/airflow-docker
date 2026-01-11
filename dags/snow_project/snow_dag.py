@@ -5,7 +5,8 @@ from airflow.providers.google.cloud.transfers.gcs_to_bigquery import GCSToBigQue
 from datetime import datetime
 
 SCRIPTS_PATH = "/opt/airflow/dags/snow_project/scripts"
-CSV_PATH = "/opt/airflow/dags/snow_project/data/final/ski_resorts.csv"
+CSV_PATH = "/opt/airflow/dags/snow_project/data/ski_resorts_weather.csv"
+
 
 GCS_BUCKET = "snow-resort-data-joana"
 GCS_OBJECT = "ski_data/ski_resorts.csv"
