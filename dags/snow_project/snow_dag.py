@@ -16,7 +16,7 @@ BQ_TABLE = "project-988eacf9-e36e-4a78-91b.snow_resort_data.ski_resorts_final"
 with DAG(
     dag_id="snow_resort_pipeline",
     start_date=datetime(2024, 1, 1),
-    schedule_interval="0 6 * * *"
+    schedule_interval="0 6 * * *",
     catchup=False,
     description="Scrape, clean, geocode ski resorts and fetch weather data",
 ) as dag:
