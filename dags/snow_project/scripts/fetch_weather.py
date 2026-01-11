@@ -1,61 +1,56 @@
-import requests
+#Fetch historical snow and temperature data using Meteostat
+
 import pandas as pd
 import time
 import os
 from pathlib import Path
-from airflow.models import Variable
+from datetime import datetime, timedelta
+from meteostat import Point, Daily
 
-#API_KEY = os.getenv("OPENWEATHER_API_KEY") - for testing locally
-API_KEY = Variable.get("OPENWEATHER_API_KEY")
-if not API_KEY:
-    raise ValueError("OPENWEATHER_API_KEY not found in environment variables")
 
-BASE_DIR = Path(__file__).resolve().parents[1]  #dags/snow_project
+BASE_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = BASE_DIR / "data"
 
 INPUT_FILE = DATA_DIR / "ski_resorts_geocoded.csv"
 OUTPUT_FILE = DATA_DIR / "ski_resorts_weather.csv"
 FAILED_FILE = DATA_DIR / "weather_failures.csv"
 
-WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
-REQUEST_DELAY = 1  #seconds
+REQUEST_DELAY = 1
 
 
 def get_weather(lat, lon):
-    """Fetch current weather data for given coordinates."""
-
     if pd.isna(lat) or pd.isna(lon):
-        return {"temp_day": None, "snow": None, "weather": None}
+        return None
 
-    params = {
-        "lat": lat,
-        "lon": lon,
-        "units": "metric",
-        "appid": API_KEY
-    }
+    location = Point(lat, lon)
+
+    end = datetime.now()
+    start = end - timedelta(days=30)
 
     try:
-        response = requests.get(WEATHER_URL, params=params, timeout=10)
-        response.raise_for_status()
-        data = response.json()
+        data = Daily(location, start, end)
+        df = data.fetch()
+
+        if df.empty:
+            return None
 
         return {
-            "temp_day": data["main"]["temp"],
-            "snow": data.get("snow", {}).get("1h", 0),
-            "weather": data["weather"][0]["description"]
+            "temp_avg": df["tavg"].mean(),
+            "snowfall_mm": df["snow"].sum(),
+            "snow_depth_mm": df["tsnow"].mean()
         }
 
-    except requests.RequestException as e:
-        print(f"Weather request failed for ({lat}, {lon}): {e}")
-        return {"temp_day": None, "snow": None, "weather": None}
+    except Exception as e:
+        print(f"Weather fetch failed for ({lat}, {lon}): {e}")
+        return None
 
 
 def main():
     df = pd.read_csv(INPUT_FILE)
 
     temps = []
-    snows = []
-    conditions = []
+    snowfall = []
+    snow_depth = []
     failed = []
 
     for i, row in df.iterrows():
@@ -63,22 +58,27 @@ def main():
 
         weather = get_weather(row["latitude"], row["longitude"])
 
-        if weather["temp_day"] is None:
+        if not weather:
             failed.append({
                 "resort_name": row["resort_name"],
                 "latitude": row["latitude"],
                 "longitude": row["longitude"]
             })
 
-        temps.append(weather["temp_day"])
-        snows.append(weather["snow"])
-        conditions.append(weather["weather"])
+            temps.append(None)
+            snowfall.append(None)
+            snow_depth.append(None)
+
+        else:
+            temps.append(weather["temp_avg"])
+            snowfall.append(weather["snowfall_mm"])
+            snow_depth.append(weather["snow_depth_mm"])
 
         time.sleep(REQUEST_DELAY)
 
-    df["temp_day"] = temps
-    df["snow_mm"] = snows
-    df["weather_desc"] = conditions
+    df["temp_avg"] = temps
+    df["snowfall_30d_mm"] = snowfall
+    df["snow_depth_avg_mm"] = snow_depth
 
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     df.to_csv(OUTPUT_FILE, index=False)
