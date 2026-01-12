@@ -7,7 +7,7 @@ import pandas as pd
 import time
 import re
 from pathlib import Path
-#rom airflow.models import Variable
+from airflow.models import Variable
 
 
 #Get base URL from Airflow Variable (with fallback)
