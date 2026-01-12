@@ -2,7 +2,8 @@ import requests
 import pandas as pd
 import time
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = BASE_DIR / "data"
@@ -13,8 +14,9 @@ FAILED_FILE = DATA_DIR / "weather_failures.csv"
 
 REQUEST_DELAY = 1
 
+
 def fetch_open_meteo(lat, lon):
-    end_date = datetime.utcnow().date()
+    end_date = datetime.now(timezone.utc).date()
     start_date = end_date - timedelta(days=30)
 
     url = "https://api.open-meteo.com/v1/forecast"
@@ -24,7 +26,8 @@ def fetch_open_meteo(lat, lon):
         "start_date": start_date.isoformat(),
         "end_date": end_date.isoformat(),
         "daily": (
-            "snowfall_sum,snow_depth_mean,"
+            "snowfall_sum,"
+            "snow_depth_mean,"
             "temperature_2m_mean,"
             "sunshine_duration,"
             "rain_sum"
@@ -67,10 +70,29 @@ def main():
     snowfall = []
     snow_depth = []
     avg_temp = []
+    sunshine = []
+    rain = []
     failed = []
 
     for i, row in df.iterrows():
         print(f"Fetching weather {i + 1}/{len(df)} for {row['resort_name']}")
+
+        # Skip resorts with missing coordinates
+        if pd.isna(row["latitude"]) or pd.isna(row["longitude"]):
+            print("Skipping resort with missing coordinates")
+
+            snowfall.append(None)
+            snow_depth.append(None)
+            avg_temp.append(None)
+            sunshine.append(None)
+            rain.append(None)
+
+            failed.append({
+                "resort_name": row["resort_name"],
+                "latitude": row["latitude"],
+                "longitude": row["longitude"]
+            })
+            continue
 
         result = fetch_open_meteo(row["latitude"], row["longitude"])
 
@@ -80,19 +102,27 @@ def main():
                 "latitude": row["latitude"],
                 "longitude": row["longitude"]
             })
+
             snowfall.append(None)
             snow_depth.append(None)
             avg_temp.append(None)
+            sunshine.append(None)
+            rain.append(None)
+
         else:
             snowfall.append(result["total_snowfall_mm"])
             snow_depth.append(result["avg_snow_depth_mm"])
-            avg_temp.append(result["avg_max_temp_30d_c"])
+            avg_temp.append(result["avg_temp_30d_c"])
+            sunshine.append(result["avg_sunshine_hours_30d"])
+            rain.append(result["total_rain_30d_mm"])
 
         time.sleep(REQUEST_DELAY)
 
     df["total_snowfall_30d_mm"] = snowfall
     df["avg_snow_depth_30d_mm"] = snow_depth
-    df["avg_max_temp_30d_c"] = avg_temp
+    df["avg_temp_30d_c"] = avg_temp
+    df["avg_sunshine_hours_30d"] = sunshine
+    df["total_rain_30d_mm"] = rain
 
     df.to_csv(OUTPUT_FILE, index=False)
 

@@ -4,12 +4,18 @@ import time
 import re
 import os
 from pathlib import Path
-from airflow.models import Variable
+#from airflow.models import Variable
 
-#API_KEY = os.getenv("OPENWEATHER_API_KEY") #- for testing locally
-API_KEY = Variable.get("OPENWEATHER_API_KEY")
+try:
+    from airflow.models import Variable
+    API_KEY = Variable.get("OPENWEATHER_API_KEY")
+except:
+    import os
+    API_KEY = os.getenv("OPENWEATHER_API_KEY")
+
 if not API_KEY:
-    raise ValueError("OPENWEATHER_API_KEY not found in environment variables")
+    raise ValueError("OPENWEATHER_API_KEY not found in Airflow Variables or environment variables")
+
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = BASE_DIR / "data"
@@ -22,25 +28,15 @@ GEOCODE_URL = "http://api.openweathermap.org/geo/1.0/direct"
 REQUEST_DELAY = 1
 
 
-def normalize_town(town):
-    if not town:
+def normalize_place(text):
+    if not text:
         return None
-    town = re.sub(r"\d{4}", "", town)
-    town = re.sub(r"The Village at ", "", town, flags=re.I)
-    town = re.sub(r"-.*", "", town)
-    town = re.sub(r"\(.*?\)", "", town)
-    town = town.strip()
-    return town
-
-
-def extract_primary_town(resort_name):
-    if not resort_name:
-        return None
-    name = re.sub(r"[–-].*", "", resort_name)
-    name = re.sub(r"\(.*?\)", "", name)
-    name = name.split("/")[0]
-    return name.strip()
-
+    text = re.sub(r"\(.*?\)", "", text)       #remove brackets
+    text = re.sub(r"-.*", "", text)           #remove suffixes
+    text = re.sub(r"\d{4}", "", text)         #remove postal codes
+    text = text.replace("/", " ")
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
 
 def geocode_query(query, country_code):
     params = {
@@ -62,33 +58,41 @@ def geocode_query(query, country_code):
 def is_valid_coordinates(lat, lon):
     if lat is None or lon is None:
         return False
-    if abs(lat) > 65:
+    if abs(lat) > 70:
         return False
     return True
 
+def build_candidates(row):
+    return [
+        normalize_place(row.get("town_clean")) if isinstance(row.get("town_clean"), str) else None,
+        normalize_place(row.get("town")) if isinstance(row.get("town"), str) else None,
+        normalize_place(row.get("resort_name")) if isinstance(row.get("resort_name"), str) else None,
+        normalize_place(row.get("sub_resorts")) if isinstance(row.get("sub_resorts"), str) else None,
+        normalize_place(row.get("local_name")) if isinstance(row.get("local_name"), str) else None,
+        f"{normalize_place(row.get('resort_name'))} ski resort"
+        if isinstance(row.get("resort_name"), str) else None
+    ]
 
-def geocode_location(town, resort_name, country_code):
-    if not country_code:
+
+def geocode_location(row):
+    country_code = row.get("country_code")
+
+    if not isinstance(country_code, str) or not country_code.strip():
         return None, None, "missing_country"
 
-    normalized_town = normalize_town(town)
-    primary_town = extract_primary_town(resort_name)
-
-    candidates = [
-        normalized_town,
-        town,
-        primary_town,
-        f"{primary_town} ski resort" if primary_town else None
-    ]
+    candidates = build_candidates(row)
 
     for query in candidates:
         if not query:
             continue
+
         lat, lon = geocode_query(query, country_code)
+
         if is_valid_coordinates(lat, lon):
             return lat, lon, query
 
     return None, None, "not_found"
+
 
 
 def main():
@@ -100,13 +104,10 @@ def main():
     failed = []
 
     for i, row in df.iterrows():
-        print(f"Geocoding {i + 1}/{len(df)}: {row['resort_name']}")
+        name = row["resort_name"] if isinstance(row["resort_name"], str) else row["town"]
+        print(f"Geocoding {i + 1}/{len(df)}: {name}")
 
-        lat, lon, source = geocode_location(
-            town=row["town"],
-            resort_name=row["resort_name"],
-            country_code=row["country_code"]
-        )
+        lat, lon, source = geocode_location(row)
 
         if lat is None:
             failed.append({

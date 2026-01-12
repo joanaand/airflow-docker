@@ -1,0 +1,42 @@
+Snow Resort Data Pipeline
+
+An automated data pipeline that scrapes ski resort data, enriches it with geolocation and weather information, and loads it into BigQuery for analysis in Looker Studio. The pipeline is orchestrated with Apache Airflow, containerized with Docker, and deployed on a Google Cloud VM.
+
+
+What It Does
+
+Scrapes ski resort data from a public website
+Cleans and standardizes the dataset
+Geocodes resort locations using an AP
+Fetches weather forecasts
+Uploads the final CSV to Google Cloud Storage
+Loads the data into BigQuery
+Visualizes results in Looker Studio
+The pipeline runs daily using an Airflow DAG.
+
+
+Tech Stack
+
+Python, Pandas
+BeautifulSoup (web scraping)
+Apache Airflow
+Docker & Docker Compose
+Google Cloud VM
+Google Cloud Storage
+BigQuery
+Looker Studio
+OpenWeather & Open-Meteo APIs
+
+Project Structure
+dags/
+  snow_project/
+    scripts/
+    data/
+    snow_dag.py
+
+Deployment
+
+Airflow is deployed on a Google Cloud VM using Docker Compose.
+The Airflow web UI is exposed via port 8080 on the VM.
+
+Author: Joana
