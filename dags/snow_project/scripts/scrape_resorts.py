@@ -22,7 +22,8 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; DataEngineeringBot/1.0)"
 }
 
-RESORT_COUNT = 100
+RESORT_COUNT = int(Variable.get("RESORT_COUNT", default_var=100))
+
 REQUEST_TIMEOUT = 10
 REQUEST_DELAY = 2
 
