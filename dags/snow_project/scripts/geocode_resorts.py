@@ -4,13 +4,13 @@ import time
 import re
 import os
 from pathlib import Path
-#from airflow.models import Variable
+from airflow.models import Variable
 
 try:
     from airflow.models import Variable
     API_KEY = Variable.get("OPENWEATHER_API_KEY")
 except:
-    import os
+
     API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
 if not API_KEY:
@@ -64,9 +64,9 @@ def is_valid_coordinates(lat, lon):
 
 def build_candidates(row):
     return [
+        normalize_place(row.get("resort_name")) if isinstance(row.get("resort_name"), str) else None,
         normalize_place(row.get("town_clean")) if isinstance(row.get("town_clean"), str) else None,
         normalize_place(row.get("town")) if isinstance(row.get("town"), str) else None,
-        normalize_place(row.get("resort_name")) if isinstance(row.get("resort_name"), str) else None,
         normalize_place(row.get("sub_resorts")) if isinstance(row.get("sub_resorts"), str) else None,
         normalize_place(row.get("local_name")) if isinstance(row.get("local_name"), str) else None,
         f"{normalize_place(row.get('resort_name'))} ski resort"

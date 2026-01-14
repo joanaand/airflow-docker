@@ -42,23 +42,23 @@ def extract_eur_price(price):
 def main():
     df = pd.read_csv(INPUT_FILE)
 
-    # --- Extract local names in brackets (without overwriting main name)
+    # Extract local names in brackets (without overwriting main name)
     extracted = df["resort_name"].str.extract(r"^(.*?)\s*\((.*?)\)$")
     df["local_name"] = extracted[1]
 
-    # --- Clean resort names
+    # Clean resort names
     df["resort_name"] = df["resort_name"].apply(clean_name)
 
-    # --- Split sub-resorts safely
+    # Split sub-resorts safely
     split_names = df["resort_name"].str.split("–", n=1, expand=True)
     df["resort_name"] = split_names[0].str.strip()
     df["sub_resorts"] = split_names[1].str.strip()
 
-    # --- Clean sub-resorts & local names
+    # Clean sub-resorts & local names
     df["sub_resorts"] = df["sub_resorts"].apply(clean_name)
     df["local_name"] = df["local_name"].apply(clean_name)
 
-    # --- Clean town names
+    # Clean town names
     df["town_clean"] = (
         df["town"]
         .str.replace(r"\s+in\s+.*", "", regex=True)
@@ -66,31 +66,31 @@ def main():
         .str.strip()
     )
 
-    # --- Rebuild missing resort names from town
+    # Rebuild missing resort names from town
     df["resort_name"] = df["resort_name"].fillna(df["town_clean"])
 
-    # --- Country codes
+    # ountry codes
     df["country_code"] = df["country"].apply(get_country_code)
 
-    # --- Prices
+    # Prices
     df["lift_price_eur"] = df["lift_price"].apply(extract_eur_price)
 
-    # --- Price per km
+    # Price per km
     df["price_per_km_eur"] = (df["lift_price_eur"] / df["total_km"]).round(2)
 
-    # --- Difficulty score
+    # Difficulty score
     df["difficulty_score"] = (
         (df["blue_km"] * 1 + df["red_km"] * 2 + df["black_km"] * 3) / df["total_km"]
     ).round(3)
 
-    # --- Elevation bands
+    # Elevation bands
     df["elevation_band"] = pd.cut(
         df["elevation_m"],
         bins=[0, 800, 1200, 1600, 3000],
         labels=["Low", "Medium", "High", "Very High"]
     )
 
-    # --- Save
+    # Save
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     df.to_csv(OUTPUT_FILE, index=False)
 

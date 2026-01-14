@@ -16,7 +16,7 @@ REQUEST_DELAY = 1
 
 
 def fetch_open_meteo(lat, lon):
-    end_date = datetime.now(timezone.utc).date()
+    end_date = end_date = datetime.now(timezone.utc).date()
     start_date = end_date - timedelta(days=30)
 
     url = "https://api.open-meteo.com/v1/forecast"
@@ -97,17 +97,18 @@ def main():
         result = fetch_open_meteo(row["latitude"], row["longitude"])
 
         if not result:
-            failed.append({
-                "resort_name": row["resort_name"],
-                "latitude": row["latitude"],
-                "longitude": row["longitude"]
-            })
 
             snowfall.append(None)
             snow_depth.append(None)
             avg_temp.append(None)
             sunshine.append(None)
             rain.append(None)
+
+            failed.append({
+                "resort_name": row["resort_name"],
+                "latitude": row["latitude"],
+                "longitude": row["longitude"]
+            })
 
         else:
             snowfall.append(result["total_snowfall_mm"])
